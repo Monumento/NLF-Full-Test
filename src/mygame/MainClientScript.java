@@ -56,13 +56,16 @@ public class MainClientScript extends SimpleApplication implements ActionListene
 
     public void displayParts(BlockInformationClient blockInformation) {
         //parameter weltelement
+
         for (int i = 0; i < blockInformation.getSize(); i++) {
             Vector3f position = blockInformation.getNextPos();
             int elementNumber = blockInformation.getNextElementNumber();
             int x = (int) position.x;
             int y = (int) position.y;
             int z = (int) position.z;
-            String weltElementID = "" + map.map[0].welt.worldBlocks.weltElemente[x][y][z].weltElementID;
+            String weltElementID = "-1";
+            if(map.map[0].welt.worldBlocks.weltElemente[x][y][z] != null)
+            weltElementID = "" + map.map[0].welt.worldBlocks.weltElemente[x][y][z].weltElementID;
             if (!loadedParts.containsKey(weltElementID)) {
 
 
@@ -175,27 +178,32 @@ public class MainClientScript extends SimpleApplication implements ActionListene
             if (player.getPhysicsLocation().x > 5 && player.getPhysicsLocation().z > 5) {
                 s[0] = "pos:" + (int) player.getPhysicsLocation().x + "," + (int) (player.getPhysicsLocation().y) + "," + (int) player.getPhysicsLocation().z;
 
-                System.out.println(s[0]);
+                //System.out.println(s[0]);
             }
 
         }
         client.update(s);
         String[] temp = client.getUpdate();
         //connection id suche
-
+        // 
         //System.out.println(temp[0]);
         if (temp != null && temp.length > 0 && temp[0] != null) {
             String[] commandTypeAndText = temp[0].split(":");
             if (commandTypeAndText.length > 2) {
                 if (commandTypeAndText[1].contains("map")) {
+
                     String[] mapCenterXYZ = commandTypeAndText[0].split(",");
+                    System.out.println(mapCenterXYZ[0] + "," + mapCenterXYZ[1] + "," + mapCenterXYZ[2]);
                     map.addPlayerPosition(new Vector3f(Integer.parseInt(mapCenterXYZ[0]), Integer.parseInt(mapCenterXYZ[1]), Integer.parseInt(mapCenterXYZ[2])));
                     map.updateMap(commandTypeAndText[2]);
-                    map.displayParts();
+                    //map.displayParts();
+
 
                 }
             }
+
         }
+        map.displayPartsAround(cam.getLocation());
         //send Messages
         if (playerThings != null) {
             playerMovement();
