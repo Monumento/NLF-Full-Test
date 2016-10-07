@@ -52,32 +52,21 @@ public class ClientMap {
     public void displayPartsAround(Vector3f position) {
         int x, y, z;
 
-        int startValue = (int) position.y * 10;
+        int startValue = (int)position.y;
 
         BlockInformationClient blockInformation = new BlockInformationClient();
-        System.out.println(playerPositions.size());
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 1; j++) {
+        //System.out.println(playerPositions.size());
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
 
-                if (playerPositions != null && playerPositions.size() >= 990) {
+                if (playerPositions != null && playerPositions.size() >= 980) {
 
-                    x = (int) playerPositions.get(startValue - 1).x;
-                    y = (int) playerPositions.get(startValue).y;
-                    z = (int) playerPositions.get(startValue + 1).z;
+                    x = (int) playerPositions.get(startValue + i + j * 100).x;
+                    y = (int) playerPositions.get(startValue + i + j * 100).y;
+                    z = (int) playerPositions.get(startValue + i + j * 100).z;
                     // System.out.println(x + " " + y + " " + z);
-                    blockInformation.addInformation(x, y, z, 1);
-                    blockInformation.addInformation(x + 1, y, z, 1);
-                    blockInformation.addInformation(x + 2, y, z, 1);
-                    blockInformation.addInformation(x, y + 1, z, 1);
-                    blockInformation.addInformation(x, y + 2, z, 1);
-                    blockInformation.addInformation(x, y, z + 1, 1);
-                    blockInformation.addInformation(x, y, z + 2, 1);
-                    blockInformation.addInformation(x + 1, y + 1, z, 1);
-                    blockInformation.addInformation(x + 2, y + 2, z, 1);
-                    blockInformation.addInformation(x, y + 1, z+1, 1);
-                    blockInformation.addInformation(x, y + 2, z+2, 1);
-                    blockInformation.addInformation(x+1, y, z + 1, 1);
-                    blockInformation.addInformation(x+2, y, z + 2, 1);
+                    blockInformation.AddCenterSizeXY(x, y, z, 5,3);
+
                 }
             }
         }

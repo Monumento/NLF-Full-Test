@@ -58,14 +58,15 @@ public class MainClientScript extends SimpleApplication implements ActionListene
         //parameter weltelement
 
         for (int i = 0; i < blockInformation.getSize(); i++) {
-            Vector3f position = blockInformation.getNextPos();
+            Vector3f position = blockInformation.getNextPos().clone();
             int elementNumber = blockInformation.getNextElementNumber();
             int x = (int) position.x;
             int y = (int) position.y;
             int z = (int) position.z;
             String weltElementID = "-1";
-            if(map.map[0].welt.worldBlocks.weltElemente[x][y][z] != null)
-            weltElementID = "" + map.map[0].welt.worldBlocks.weltElemente[x][y][z].weltElementID;
+            if (map.map[0].welt.worldBlocks.weltElemente[x][y][z] != null) {
+                weltElementID = "" + map.map[0].welt.worldBlocks.weltElemente[x][y][z].weltElementID;
+            }
             if (!loadedParts.containsKey(weltElementID)) {
 
 
@@ -73,7 +74,8 @@ public class MainClientScript extends SimpleApplication implements ActionListene
                 //Vector3f position = map.map[0].welt.worldBlocks.weltElemente[i][j][k].positon.clone();
                 // position = position.mult(2f).add(new Vector3f(0, -50, 0));
                 Spatial terrain = assetManager.loadModel("Models/lowResDirt/lowResDirt.j3o");
-
+                terrain.scale(4);
+                position = position.mult(8);
                 RigidBodyControl landscapeControl = new RigidBodyControl(0);
                 terrain.setLocalTranslation(position);
 
